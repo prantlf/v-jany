@@ -1,4 +1,4 @@
-module jsany
+module jany
 
 fn test_empty_path() {
 	Any(null).set('', Any(f64(1))) or {

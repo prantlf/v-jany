@@ -22,10 +22,10 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
-        path: jsany
+        path: jany
     - name: Build V
       run: make
     - name: Test
       run: |
-        cd jsany
+        cd jany
         ../v test .

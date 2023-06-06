@@ -1,4 +1,4 @@
-module jsany
+module jany
 
 pub fn marshal[T](val T) !Any {
 	$if T is $enum {

@@ -15,7 +15,7 @@ Used in [json] and [yaml] packages.
 ## Synopsis
 
 ```go
-import jsany { Any, Null, any_int }
+import jany { Any, Null, any_int }
 
 // Create an Any
 any := any_int(42)  // factory function
@@ -60,7 +60,7 @@ config := unmarshal[Config](any)
 You can install this package from GitHub:
 
 ```txt
-v install --git https://github.com/prantlf/v-jsany
+v install --git https://github.com/prantlf/v-jany
 ```
 
 ## API
@@ -74,7 +74,7 @@ pub type Any = Null | bool    | f64    | string | []Any | map[string]Any
 
 ### Null
 
-The `null` is a special value in the `jsany` namespace:
+The `null` is a special value in the `jany` namespace:
 
 ```go
 pub const null = Null{}
@@ -114,7 +114,7 @@ typ := any.typ()
 
 ### Factories
 
-An `Any` can be created by casting a native V value to the sumtype, or using a factory function exported from the `jsany` namespace:
+An `Any` can be created by casting a native V value to the sumtype, or using a factory function exported from the `jany` namespace:
 
 | JSON type | V type           | Casting                   | Factory                   |
 |:----------|:-----------------|:--------------------------|:--------------------------|
@@ -183,7 +183,7 @@ any.add('a.b', any_int(42))!
 
 ### Marshalling
 
-Except for using `Any` values directly, they can be converted to static V types and back again by functions exported from the `jsany` namespace:
+Except for using `Any` values directly, they can be converted to static V types and back again by functions exported from the `jany` namespace:
 
 ### marshal[T](value T) !Any
 

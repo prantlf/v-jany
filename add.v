@@ -1,4 +1,4 @@
-module jsany
+module jany
 
 pub fn (a Any) add(path string, value Any) ! {
 	parts := parse_path(path)!

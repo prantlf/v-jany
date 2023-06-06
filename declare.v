@@ -1,4 +1,4 @@
-module jsany
+module jany
 
 [noinit]
 pub struct Null {}
@@ -19,5 +19,5 @@ pub fn (a Any) typ() string {
 }
 
 pub fn (a Any) is_null() bool {
-	return a == Any(jsany.null)
+	return a == Any(jany.null)
 }

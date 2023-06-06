@@ -1,4 +1,4 @@
-module jsany
+module jany
 
 fn test_u8() {
 	assert Any(f64(1)).u8()! == 1

@@ -1,4 +1,4 @@
-module jsany
+module jany
 
 pub fn any_null() Any {
 	return null

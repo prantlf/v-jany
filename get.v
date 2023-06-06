@@ -1,4 +1,4 @@
-module jsany
+module jany
 
 import strconv
 

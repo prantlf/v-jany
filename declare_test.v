@@ -1,4 +1,4 @@
-module jsany
+module jany
 
 fn test_is_null() {
 	assert Any(null) is Null

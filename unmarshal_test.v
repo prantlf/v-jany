@@ -1,4 +1,4 @@
-module jsany
+module jany
 
 fn test_unmarshal_null_to_scalar() {
 	unmarshal[int](Any(null), UnmarshalOpts{}) or {
@@ -95,7 +95,7 @@ struct Empty {}
 
 fn test_unmarshal_empty_input() {
 	unmarshal[Empty](Any(null), UnmarshalOpts{}) or {
-		assert err.msg() == 'null cannot be cast to jsany.Empty'
+		assert err.msg() == 'null cannot be cast to jany.Empty'
 		return
 	}
 	assert false

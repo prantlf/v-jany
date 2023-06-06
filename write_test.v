@@ -1,4 +1,4 @@
-module jsany
+module jany
 
 fn test_null() {
 	r := Any(null).str()

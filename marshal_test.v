@@ -1,4 +1,4 @@
-module jsany
+module jany
 
 fn test_marshal_int() {
 	r := marshal(1)!
@@ -244,7 +244,7 @@ fn test_marshal_optional_type() {
 // }
 
 // fn test_marshal_array_in_struct() {
-// 	jsany.marshal[ArrayInStruct]('', jsany.marshalOpts{}) or {
+// 	jany.marshal[ArrayInStruct]('', jany.marshalOpts{}) or {
 // 		assert err.msg() == 'null is not an object'
 // 		return
 // 	}
