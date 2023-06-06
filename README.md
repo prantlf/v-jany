@@ -57,9 +57,10 @@ config := unmarshal[Config](any)
 
 ## Installation
 
-You can install this package from GitHub:
+You can install this package either from [VPM] or from GitHub:
 
 ```txt
+v install prantlf.jany
 v install --git https://github.com/prantlf/v-jany
 ```
 
@@ -228,6 +229,7 @@ This is a work in progress.
 * Should the getters be forgiving and chekcing getter should be renamed to `strict_*`?
 * Enable support for arrays (bug [#18317]).
 
+[VPM]: https://vpm.vlang.io/packages/prantlf.jany
 [json]: https://github.com/prantlf/v-json
 [yaml]: https://github.com/prantlf/v-yaml
 [#18317]: https://github.com/vlang/v/issues/18317
