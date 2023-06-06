@@ -1,4 +1,4 @@
-# Any for JSON and YAML
+# Any Type for JSON and YAML
 
 Build and access JSON/YAML data using a dynamic sumtype instead of static types.
 
