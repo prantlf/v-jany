@@ -68,13 +68,11 @@ fn test_unmarshal_string() {
 	assert r == 'a'
 }
 
-/*
 fn test_unmarshal_array() {
 	r := unmarshal[[]int](Any([Any(f64(1))]), UnmarshalOpts{})!
 	assert r.len == 1
 	assert r[0] == 1
 }
-*/
 
 enum Human {
 	man
@@ -230,33 +228,30 @@ fn test_unmarshal_optional_null_type() {
 	assert false
 }
 
-/*
 struct OptionalArray {
 	int ?[]int
 }
 
 fn test_unmarshal_optional_array() {
-	input := r'
-int:
-	- 1
-'
+	input := Any({
+		'int': Any([Any(f64(1))])
+	})
 	r := unmarshal[OptionalArray](input, UnmarshalOpts{})!
 	assert r.int?.len == 1
 	assert r.int?[0] == 1
 }
-*/
 
 /*
 struct ArrayOfOptions {
-	int []?int
+mut:	int []?int
 }
 
 fn test_unmarshal_array_of_options() {
-	input := r'
-int:
-	- 1
-'
-	r := unmarshal[ArrayOfOptions](input, UnmarshalOpts{})!
+	input := Any({
+		'int': Any([Any(f64(1))])
+	})
+	mut r := unmarshal[ArrayOfOptions](input, UnmarshalOpts{})!
+						println('*** 2.11')
 	assert r.int.len == 1
 	first := r.int[0]
 	assert first? == 1
@@ -285,6 +280,20 @@ struct OuterStruct {
 }
 
 fn test_unmarshal_struct_in_struct() {
+	input := Any({
+		'inner': Any({
+			'val': Any(f64(1))
+		})
+	})
+	r := unmarshal[OuterStruct](input, UnmarshalOpts{})!
+	assert r.inner.val == 1
+}
+
+struct OptionsStruct {
+	inner ?InnerStruct
+}
+
+fn test_unmarshal_option_struct() {
 	input := Any({
 		'inner': Any({
 			'val': Any(f64(1))

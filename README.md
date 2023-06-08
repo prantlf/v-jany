@@ -12,6 +12,8 @@ Build and access JSON/YAML data using a dynamic sumtype instead of static types.
 
 Used in [json] and [yaml] packages.
 
+**Attention**: If you dependened on the pachage `prantlf.jsany`, rename the dependency to `prantlf.jany`.
+
 ## Synopsis
 
 ```go
@@ -226,10 +228,8 @@ config := unmarshal[Config](any)
 This is a work in progress.
 
 * Should `is_null` stay or should only `is Null` remain?
-* Should the getters be forgiving and chekcing getter should be renamed to `strict_*`?
-* Enable support for arrays (bug [#18317]).
+* Should the getters be forgiving and checking getter should be renamed to `strict_*`?
 
 [VPM]: https://vpm.vlang.io/packages/prantlf.jany
 [json]: https://github.com/prantlf/v-json
 [yaml]: https://github.com/prantlf/v-yaml
-[#18317]: https://github.com/vlang/v/issues/18317

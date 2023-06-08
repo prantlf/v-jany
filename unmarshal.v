@@ -69,6 +69,11 @@ fn unmarshal_array[T](_ []T, a Any, opts UnmarshalOpts) ![]T {
 	return typ
 }
 
+fn unmarshal_array_option[T](_ ?[]T, a Any, opts UnmarshalOpts) ![]T {
+	arr := []T{}
+	return unmarshal_array(arr, a, opts)!
+}
+
 fn unmarshal_struct[T](_ T, a Any, opts UnmarshalOpts) !T {
 	res := a.object()!
 	mut typ := T{}
@@ -156,13 +161,16 @@ fn unmarshal_struct[T](_ T, a Any, opts UnmarshalOpts) !T {
 				} $else $if field.typ is string || field.typ is ?string {
 					typ.$(field.name) = val.string()!
 				} $else $if field.is_array {
-					typ.$(field.name) = unmarshal_array(typ.$(field.name), val, opts)!
+					$if field.is_option {
+						typ.$(field.name) = unmarshal_array_option(typ.$(field.name),
+							val, opts)!
+					} $else {
+						typ.$(field.name) = unmarshal_array(typ.$(field.name), val, opts)!
+					}
 				} $else $if field.is_struct {
 					typ.$(field.name) = unmarshal_struct(typ.$(field.name), val, opts)!
 				} $else $if field.is_map {
-					mut object := T{}
-					unmarshal_map(mut object, val, opts)!
-					typ.$(field.name) = object
+					typ.$(field.name) = unmarshal_map(typ.$(field.name), val, opts)!
 				} $else {
 					return error('unsupported type ${type_name(field.typ)} of ${field.name}')
 				}
@@ -227,9 +235,11 @@ fn unmarshal_enum(a Any, typ int) !int {
 	}
 }
 
-fn unmarshal_map[T](mut typ map[string]T, a Any) ! {
+fn unmarshal_map[T](_ T, a Any) !T {
 	res := a.object()!
+	dst := T{}
 	for k, v in res {
-		typ[k] = T(v)
+		dst[k] = T(v)
 	}
+	return dst
 }
