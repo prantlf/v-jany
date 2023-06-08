@@ -1,67 +1,67 @@
 module jany
 
 fn test_marshal_int() {
-	r := marshal(1)!
+	r := marshal(1, MarshalOpts{})!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_u8() {
-	r := marshal(u8(1))!
+	r := marshal(u8(1), MarshalOpts{})!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_u16() {
-	r := marshal(u16(1))!
+	r := marshal(u16(1), MarshalOpts{})!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_u32() {
-	r := marshal(u32(1))!
+	r := marshal(u32(1), MarshalOpts{})!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_u64() {
-	r := marshal(u64(1))!
+	r := marshal(u64(1), MarshalOpts{})!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_i8() {
-	r := marshal(u8(1))!
+	r := marshal(u8(1), MarshalOpts{})!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_i16() {
-	r := marshal(u16(1))!
+	r := marshal(u16(1), MarshalOpts{})!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_i64() {
-	r := marshal(u64(1))!
+	r := marshal(u64(1), MarshalOpts{})!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_f32() {
-	r := marshal(f32(1.2))!
+	r := marshal(f32(1.2), MarshalOpts{})!
 	assert f32(r.number()!) == 1.2
 }
 
 fn test_marshal_f64() {
-	r := marshal(1.2)!
+	r := marshal(1.2, MarshalOpts{})!
 	assert r == Any(1.2)
 }
 
 fn test_marshal_bool() {
-	r := marshal(true)!
+	r := marshal(true, MarshalOpts{})!
 	assert r == Any(true)
 }
 
 fn test_marshal_string() {
-	r := marshal('a')!
+	r := marshal('a', MarshalOpts{})!
 	assert r == Any('a')
 }
 
 fn test_marshal_array() {
-	r := marshal([1])!
+	r := marshal([1], MarshalOpts{})!
 	assert r == Any([]Any{})
 }
 
@@ -71,19 +71,19 @@ enum Human {
 }
 
 fn test_marshal_enum_num() {
-	r := marshal(Human.woman)!
+	r := marshal(Human.woman, MarshalOpts{})!
 	assert r == Any(f64(1))
 }
 
-// fn test_marshal_enum_nam() {
-// 	r := marshal[Human](Any('woman'))!
-// 	assert r == .woman
-// }
+fn test_marshal_enum_nam() {
+	r := marshal(Human.woman, MarshalOpts{ enums_as_names: true })!
+	assert r == Any('woman')
+}
 
 struct Empty {}
 
 fn test_marshal_empty_object() {
-	r := marshal(Empty{})!
+	r := marshal(Empty{}, MarshalOpts{})!
 	assert r == Any(map[string]Any{})
 }
 
@@ -118,7 +118,7 @@ fn test_marshal_primitive_types() {
 		f64: 9.2
 		string: 's'
 		bool: true
-	})!
+	}, MarshalOpts{})!
 	m := r.object()!
 	assert m['h']! == Any(f64(Human.woman))
 	assert m['u8']! == Any(f64(1))

@@ -17,7 +17,7 @@ Used in [json] and [yaml] packages.
 ## Synopsis
 
 ```go
-import jany { Any, Null, any_int }
+import jany { Any, Null, any_int, marshal, MarshalOpts, unmarshal, UnmarshalOpts }
 
 // Create an Any
 any := any_int(42)  // factory function
@@ -45,7 +45,7 @@ struct Config {
 	answer int
 }
 config := Config{ answer: 42 }
-any := marshal(config)
+any := marshal(config, MarshalOpts{})
 
 // Unmarshal an Any to a static type
 struct Config {
@@ -54,7 +54,7 @@ struct Config {
 any := Any({
   'answer': Any(f64(42))
 })
-config := unmarshal[Config](any)
+config := unmarshal[Config](any, UnmarshalOpts{})
 ```
 
 ## Installation
@@ -188,9 +188,13 @@ any.add('a.b', any_int(42))!
 
 Except for using `Any` values directly, they can be converted to static V types and back again by functions exported from the `jany` namespace:
 
-### marshal[T](value T) !Any
+### marshal[T](value T, opts MarshalOpts) !Any
 
-Marshals a value of `T` to `Any` value.
+Marshals a value of `T` to `Any` value. Fields available in `MarshalOpts`:
+
+| Name             | Type   | Default | Description                                                        |
+|:-----------------|:-------|:--------|:-------------------------------------------------------------------|
+| `enums_as_names` | `bool` | `false` | stores `string` names of enum values instead of their `int` values |
 
 ```go
 struct Config {
@@ -229,6 +233,7 @@ This is a work in progress.
 
 * Should `is_null` stay or should only `is Null` remain?
 * Should the getters be forgiving and checking getter should be renamed to `strict_*`?
+* Support enums, which don't start with `0` or don't have their values as sequences without holes.
 
 [VPM]: https://vpm.vlang.io/packages/prantlf.jany
 [json]: https://github.com/prantlf/v-json

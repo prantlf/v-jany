@@ -1,8 +1,13 @@
 module jany
 
-pub fn marshal[T](val T) !Any {
+pub struct MarshalOpts {
+pub:
+	enums_as_names	bool
+}
+
+pub fn marshal[T](val T, opts MarshalOpts) !Any {
 	$if T is $enum {
-		return Any(f64(val))
+		return marshal_enum(val, opts.enums_as_names)
 	} $else $if T is int {
 		return Any(f64(val))
 	} $else $if T is u8 {
@@ -28,25 +33,37 @@ pub fn marshal[T](val T) !Any {
 	} $else $if T is string {
 		return Any(val)
 	} $else $if T is $array {
-		return marshal_array(val)!
+		return marshal_array(val, opts)!
 	} $else $if T is $struct {
-		return marshal_struct(val)!
+		return marshal_struct(val, opts)!
 	} $else $if T is $map {
-		return marshal_map(val)!
+		return marshal_map(val, opts)!
 	} $else {
 		return error('unsupported type ${T.name}')
 	}
 }
 
-fn marshal_array[T](val []T) !Any {
+fn marshal_enum[T](val T, names bool) !Any {
+	if names {
+		enums := enum_vals(T.idx)!
+		if val < 0 || val >= enums.len {
+			return error('${val} out of bounds of ${type_name(T.idx)}')
+		}
+		return Any(enums[int(val)])
+	} else {
+		return Any(f64(val))
+	}
+}
+
+fn marshal_array[T](val []T, opts MarshalOpts) !Any {
 	mut res := []Any{cap: val.len}
 	for item in res {
-		res << marshal(item)!
+		res << marshal(item, opts)!
 	}
 	return Any(res)
 }
 
-fn marshal_struct[T](src T) !Any {
+fn marshal_struct[T](src T, opts MarshalOpts) !Any {
 	mut res := map[string]Any{}
 
 	$for field in T.fields {
@@ -97,11 +114,11 @@ fn marshal_struct[T](src T) !Any {
 			} $else $if field.typ is string {
 				res[json_name] = Any(val)
 			} $else $if field.is_array {
-				res[json_name] = marshal_array(val)!
+				res[json_name] = marshal_array(val, opts)!
 			} $else $if field.is_struct {
-				res[json_name] = marshal_struct(val)!
+				res[json_name] = marshal_struct(val, opts)!
 			} $else $if field.is_map {
-				res[json_name] = marshal_map(val)!
+				res[json_name] = marshal_map(val, opts)!
 			} $else {
 				return error('unsupported type ${type_name(field.typ)} of ${field.name}')
 			}
@@ -110,7 +127,7 @@ fn marshal_struct[T](src T) !Any {
 	return Any(res)
 }
 
-fn marshal_map[T](src map[string]T) !Any {
+fn marshal_map[T](src map[string]T, opts MarshalOpts) !Any {
 	res := a.object()!
 	for k, v in res {
 		typ[k] = T(v)
