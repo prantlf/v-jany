@@ -92,7 +92,7 @@ fn get_int[T](a Any) !T {
 fn get_f32(a Any) !f32 {
 	float := a.number()!
 	num := f32(float)
-	if float - num > math.smallest_non_zero_f64 {
+	if float - f64(num) > math.smallest_non_zero_f64 {
 		return error('unable to convert "${float}" to f32')
 	}
 	return num

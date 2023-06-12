@@ -2,7 +2,7 @@ module jany
 
 pub struct MarshalOpts {
 pub:
-	enums_as_names	bool
+	enums_as_names bool
 }
 
 pub fn marshal[T](val T, opts MarshalOpts) !Any {

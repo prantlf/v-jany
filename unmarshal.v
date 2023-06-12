@@ -214,7 +214,7 @@ fn unmarshal_int[T](a Any, ignore_overflow bool) !T {
 fn unmarshal_f32(a Any, ignore_overflow bool) !f32 {
 	float := a.number()!
 	num := f32(float)
-	if !ignore_overflow && float - num > math.smallest_non_zero_f64 {
+	if !ignore_overflow && float - f64(num) > math.smallest_non_zero_f64 {
 		return error('unable to convert "${float}" to f32')
 	}
 	return num
