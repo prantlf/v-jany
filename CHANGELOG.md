@@ -1,3 +1,12 @@
+# [0.0.4](https://github.com/prantlf/v-jany/compare/v0.0.3...v0.0.4) (2023-06-12)
+
+
+### Bug Fixes
+
+* Fix checks for float overflow ([ed1a336](https://github.com/prantlf/v-jany/commit/ed1a33627785827aa4749dd9da768ba0d5ddf67c))
+
+
+
 ## [0.0.3](https://github.com/prantlf/v-jany/compare/v0.0.2...v0.0.3) (2023-06-08)
 
 
