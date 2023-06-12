@@ -17,7 +17,7 @@ Used in [json] and [yaml] packages.
 ## Synopsis
 
 ```go
-import jany { Any, Null, any_int, marshal, MarshalOpts, unmarshal, UnmarshalOpts }
+import prantlf.jany { Any, Null, any_int, marshal, MarshalOpts, unmarshal, UnmarshalOpts }
 
 // Create an Any
 any := any_int(42)  // factory function
