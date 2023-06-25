@@ -202,7 +202,7 @@ struct Config {
 }
 
 config := Config{ answer: 42 }
-any := marshal(config)
+any := marshal(config, MarshalOpts{})
 ```
 
 ### unmarshal_text[T](any Any, opts UnmarshalOpts) !T
@@ -224,7 +224,7 @@ struct Config {
 any := Any({
   'answer': Any(f64(42))
 })
-config := unmarshal[Config](any)
+config := unmarshal[Config](any, UnmarshalOpts{})
 ```
 
 ## TODO

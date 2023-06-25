@@ -23,6 +23,7 @@ fn get_value(value Any, parts []Part) !Any {
 	return cur
 }
 
+[direct_array_access]
 fn parse_path(path string) ![]Part {
 	mut parts := []Part{}
 	len := path.len
