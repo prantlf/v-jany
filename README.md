@@ -10,9 +10,9 @@ Build and access JSON/YAML data using a dynamic sumtype instead of static types.
 * Convenient traversing of nested values in arrays and objects.
 * Unmarshalling `Any` data to a static V type and marshalling a V value to `Any` data.
 
-Used in [json] and [yaml] packages.
+Used in [prantlf.json] and [prantlf.yaml] packages.
 
-**Attention**: If you dependened on the pachage `prantlf.jsany`, rename the dependency to `prantlf.jany`.
+**Attention**: If you dependened on the package `prantlf.jsany`, rename the dependency to `prantlf.jany`.
 
 ## Synopsis
 
@@ -236,5 +236,5 @@ This is a work in progress.
 * Support enums, which don't start with `0` or don't have their values as sequences without holes.
 
 [VPM]: https://vpm.vlang.io/packages/prantlf.jany
-[json]: https://github.com/prantlf/v-json
-[yaml]: https://github.com/prantlf/v-yaml
+[prantlf.json]: https://github.com/prantlf/v-json
+[prantlf.yaml]: https://github.com/prantlf/v-yaml
