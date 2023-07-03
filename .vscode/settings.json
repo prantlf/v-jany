@@ -1,0 +1,24 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/add_test": true,
+    "**/add_test.dSYM": true,
+    "**/convert_test": true,
+    "**/convert_test.dSYM": true,
+    "**/create_test": true,
+    "**/create_test.dSYM": true,
+    "**/declare_test": true,
+    "**/declare_test.dSYM": true,
+    "**/get_test": true,
+    "**/get_test.dSYM": true,
+    "**/marshal_test": true,
+    "**/marshal_test.dSYM": true,
+    "**/set_test": true,
+    "**/set_test.dSYM": true,
+    "**/unmarshal_test": true,
+    "**/unmarshal_test.dSYM": true,
+    "**/write_test": true,
+    "**/write_test.dSYM": true
+  }
+}

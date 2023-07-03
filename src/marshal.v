@@ -46,7 +46,8 @@ pub fn marshal[T](val T, opts MarshalOpts) !Any {
 fn marshal_enum[T](val T, names bool) !Any {
 	if names {
 		enums := enum_vals(T.idx)!
-		if val < 0 || val >= enums.len {
+		ival := int(val)
+		if ival < 0 || ival >= enums.len {
 			return error('${val} out of bounds of ${type_name(T.idx)}')
 		}
 		return Any(enums[int(val)])
