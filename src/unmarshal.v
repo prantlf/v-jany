@@ -51,8 +51,8 @@ pub fn unmarshal[T](a Any, opts UnmarshalOpts) !T {
 			typ = unmarshal_array(typ, a, opts)!
 		} $else $if T is $struct {
 			typ = unmarshal_struct(typ, a, opts)!
-		} $else $if T is $map {
-			unmarshal_map(mut typ, a, opts)!
+			// } $else $if T is $map {
+			// 	typ = unmarshal_map(typ, a, opts)!
 		} $else {
 			return error('unsupported type ${T.name}')
 		}
@@ -169,8 +169,8 @@ fn unmarshal_struct[T](_ T, a Any, opts UnmarshalOpts) !T {
 					}
 				} $else $if field.is_struct {
 					typ.$(field.name) = unmarshal_struct(typ.$(field.name), val, opts)!
-				} $else $if field.is_map {
-					typ.$(field.name) = unmarshal_map(typ.$(field.name), val, opts)!
+					// } $else $if field.is_map {
+					// 	typ.$(field.name) = unmarshal_map(typ.$(field.name), val, opts)!
 				} $else {
 					return error('unsupported type ${type_name(field.typ)} of ${field.name}')
 				}
@@ -235,11 +235,11 @@ fn unmarshal_enum(a Any, typ int) !int {
 	}
 }
 
-fn unmarshal_map[T](_ T, a Any) !T {
-	res := a.object()!
-	dst := T{}
-	for k, v in res {
-		dst[k] = T(v)
-	}
-	return dst
-}
+// fn unmarshal_map[T](_ T, a Any, opts UnmarshalOpts) !T {
+// 	res := a.object()!
+// 	mut typ := T{}
+// 	for k, v in res {
+// 		typ[k] = unmarshal[T](v, opts)!
+// 	}
+// 	return typ
+// }
