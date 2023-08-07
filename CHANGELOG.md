@@ -1,5 +1,11 @@
 # Changes 
 
+## [0.0.6](https://github.com/prantlf/v-jany/compare/v0.0.5...v0.0.6) (2023-08-07)
+
+### Bug Fixes
+
+* Temporarily disable the incomplete map handling ([8cddc76](https://github.com/prantlf/v-jany/commit/8cddc7636754cf3f6a549b5d762a82349ad0fe0e))
+
 ## [0.0.5](https://github.com/prantlf/v-jany/compare/v0.0.4...v0.0.5) (2023-06-25)
 
 ### Bug Fixes
