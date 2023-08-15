@@ -1,5 +1,11 @@
 # Changes 
 
+## [0.1.0](https://github.com/prantlf/v-jany/compare/v0.0.6...v0.1.0) (2023-08-15)
+
+### Features
+
+* Add unmarshal_to to modify an existing object ([8657d7d](https://github.com/prantlf/v-jany/commit/8657d7d0417bc261c9bc08971555bad537747e8f))
+
 ## [0.0.6](https://github.com/prantlf/v-jany/compare/v0.0.5...v0.0.6) (2023-08-07)
 
 ### Bug Fixes
