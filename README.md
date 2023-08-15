@@ -188,7 +188,7 @@ any.add('a.b', any_int(42))!
 
 Except for using `Any` values directly, they can be converted to static V types and back again by functions exported from the `jany` namespace:
 
-### marshal[T](value T, opts MarshalOpts) !Any
+### marshal[T](value T, opts &MarshalOpts) !Any
 
 Marshals a value of `T` to `Any` value. Fields available in `MarshalOpts`:
 
@@ -202,12 +202,12 @@ struct Config {
 }
 
 config := Config{ answer: 42 }
-any := marshal(config, MarshalOpts{})
+any := marshal(config, MarshalOpts{})!
 ```
 
-### unmarshal_text[T](any Any, opts UnmarshalOpts) !T
+### unmarshal[T](any Any, opts &UnmarshalOpts) !T
 
-Unmarshals an `Any` value to an instance of `T`. Fields available in `UnmarshalOpts`:
+Unmarshals an `Any` value to a new instance of `T`. Fields available in `UnmarshalOpts`:
 
 | Name                     | Type   | Default | Description                                                             |
 |:-------------------------|:-------|:--------|:------------------------------------------------------------------------|
@@ -224,7 +224,30 @@ struct Config {
 any := Any({
   'answer': Any(f64(42))
 })
-config := unmarshal[Config](any, UnmarshalOpts{})
+config := unmarshal[Config](any, UnmarshalOpts{})!
+```
+
+### unmarshal_to[T](any Any, mut typ T, opts &UnmarshalOpts) !
+
+Unmarshals an `Any` value to an existing instance of `T`. Fields available in `UnmarshalOpts`:
+
+| Name                     | Type   | Default | Description                                                             |
+|:-------------------------|:-------|:--------|:------------------------------------------------------------------------|
+| `require_all_fields`     | `bool` | `false` | requires a key in the source object for each field in the target struct |
+| `forbid_extra_keys`      | `bool` | `false` | forbids keys in the source object not mapping to a field in the target struct |
+| `cast_null_to_default`   | `bool` | `false` | allows `null`s in the source data to be translated to default values of V types; `null`s can be unmarshaled only to Option types by default |
+| `ignore_number_overflow` | `bool` | `false` | allows losing precision when unmarshaling numbers to smaller numeric types |
+
+```go
+struct Config {
+	answer int
+}
+
+any := Any({
+  'answer': Any(f64(42))
+})
+mut config := Config{}
+config := unmarshal_to(any, mut config, UnmarshalOpts{})!
 ```
 
 ## TODO

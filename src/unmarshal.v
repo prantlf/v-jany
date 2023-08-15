@@ -11,8 +11,13 @@ pub:
 	ignore_number_overflow bool
 }
 
-pub fn unmarshal[T](a Any, opts UnmarshalOpts) !T {
+pub fn unmarshal[T](a Any, opts &UnmarshalOpts) !T {
 	mut typ := T{}
+	unmarshal_to[T](a, mut typ, opts)!
+	return typ
+}
+
+pub fn unmarshal_to[T](a Any, mut typ T, opts &UnmarshalOpts) ! {
 	if a is Null {
 		$if T is $option {
 			typ = none
@@ -57,10 +62,9 @@ pub fn unmarshal[T](a Any, opts UnmarshalOpts) !T {
 			return error('unsupported type ${T.name}')
 		}
 	}
-	return typ
 }
 
-fn unmarshal_array[T](_ []T, a Any, opts UnmarshalOpts) ![]T {
+fn unmarshal_array[T](_ []T, a Any, opts &UnmarshalOpts) ![]T {
 	res := a.array()!
 	mut typ := []T{cap: res.len}
 	for item in res {
@@ -69,12 +73,12 @@ fn unmarshal_array[T](_ []T, a Any, opts UnmarshalOpts) ![]T {
 	return typ
 }
 
-fn unmarshal_array_option[T](_ ?[]T, a Any, opts UnmarshalOpts) ![]T {
+fn unmarshal_array_option[T](_ ?[]T, a Any, opts &UnmarshalOpts) ![]T {
 	arr := []T{}
 	return unmarshal_array(arr, a, opts)!
 }
 
-fn unmarshal_struct[T](_ T, a Any, opts UnmarshalOpts) !T {
+fn unmarshal_struct[T](_ T, a Any, opts &UnmarshalOpts) !T {
 	res := a.object()!
 	mut typ := T{}
 
@@ -235,7 +239,7 @@ fn unmarshal_enum(a Any, typ int) !int {
 	}
 }
 
-// fn unmarshal_map[T](_ T, a Any, opts UnmarshalOpts) !T {
+// fn unmarshal_map[T](_ T, a Any, opts &UnmarshalOpts) !T {
 // 	res := a.object()!
 // 	mut typ := T{}
 // 	for k, v in res {
