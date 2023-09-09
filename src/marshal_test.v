@@ -252,53 +252,53 @@ fn test_marshal_optional_type() {
 // }
 // */
 
-// /*
-// struct InnerStruct {
-// 	val int
-// }
+struct InnerStruct {
+	val int
+}
 
-// struct OuterStruct {
-// 	inner InnerStruct
-// }
+struct OuterStruct {
+	inner InnerStruct
+}
 
-// fn test_marshal_struct_in_struct() {
-// 	input := r'
-// inner:
-//   val: 1
-// '
-// 	r := marshal[OuterStruct](input)!
-// 	assert r.inner.val == 1
-// }
-// */
+fn test_marshal_struct_in_struct() {
+	input := OuterStruct{
+		inner: InnerStruct{
+			val: 1
+		}
+	}
+	r := marshal(input, MarshalOpts{})!
+	o := r.object()!
+	i := o['inner']!
+	io := i.object()!
+	v := io['val']!
+	assert v == Any(f64(1))
+}
 
-// struct Attributes {
-// 	int    int    [required]
-// 	bool   bool   [skip]
-// 	string string
-// 	f64    f64    [json: float; required]
-// 	u8     u8     [nooverflow]
-// 	u16    u16    [nullable]
-// }
+struct Attributes {
+	int    int    [required]
+	bool   bool   [skip]
+	string string
+	f64    f64    [json: float; required]
+	u8     u8     [nooverflow]
+	u16    u16    [nullable]
+}
 
-// fn test_attributes() {
-// 	input := Any({
-// 		'int': Any(f64(1))
-// 		'float': Any(2.3)
-// 		'bool': Any(true)
-// 		'u8': Any(f64(1234))
-// 		'u16': Any(null)
-// 	})
-// 	opts := marshalOpts{
-// 		require_all_fields: false
-// 		forbid_extra_keys: false
-// 		cast_null_to_default: false
-// 		ignore_number_overflow: false
-// 	}
-// 	r := marshal[Attributes](input, opts)!
-// 	assert r.int == 1
-// 	assert r.bool == false
-// 	assert r.string == ''
-// 	assert r.f64 == 2.3
-// 	assert r.u8 == u8(1234)
-// 	assert r.u16 == 0
-// }
+fn test_attributes() {
+	input := Attributes{
+		int: 1
+		f64: 2.3
+		bool: true
+		u8: 4
+		u16: 0
+	}
+	r := marshal(input, MarshalOpts{})!
+	o := r.object()!
+	assert o['int']! == Any(f64(1))
+	if _ := o['bool'] {
+		assert false
+	}
+	assert o['string']! == Any('')
+	assert o['float']! == Any(2.3)
+	assert o['u8']! == Any(f64(4))
+	assert o['u16']! == Any(f64(0))
+}

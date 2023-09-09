@@ -139,7 +139,8 @@ fn unmarshal_struct[T](_ T, a Any, opts &UnmarshalOpts) !T {
 			} else {
 				ino := nooverflow || opts.ignore_number_overflow
 				$if field.is_enum {
-					typ.$(field.name) = unmarshal_enum(val, field.typ)!
+					source := unmarshal_enum(val, field.typ)!
+					unsafe { typ.$(field.name) = source }
 				} $else $if field.typ is int || field.typ is ?int {
 					typ.$(field.name) = unmarshal_int[int](val, ino)!
 				} $else $if field.typ is u8 || field.typ is ?u8 {

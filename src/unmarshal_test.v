@@ -79,15 +79,15 @@ enum Human {
 	woman
 }
 
-// fn test_unmarshal_enum_num() {
-// 	r := unmarshal[Human](Any(f64(1)), UnmarshalOpts{})!
-// 	assert r == .woman
-// }
+fn test_unmarshal_enum_num() {
+	r := unmarshal[Human](Any(f64(1)), UnmarshalOpts{})!
+	assert r == .woman
+}
 
-// fn test_unmarshal_enum_nam() {
-// 	r := unmarshal[Human](Any('woman'), UnmarshalOpts{})!
-// 	assert r == .woman
-// }
+fn test_unmarshal_enum_nam() {
+	r := unmarshal[Human](Any('woman'), UnmarshalOpts{})!
+	assert r == .woman
+}
 
 struct Empty {}
 
@@ -119,37 +119,37 @@ struct PrimitiveTypes {
 	bool   bool
 }
 
-// fn test_unmarshal_primitive_types() {
-// 	input := Any({
-// 		'h':      Any(f64(Human.woman))
-// 		'u8':     Any(f64(1))
-// 		'u16':    Any(f64(2))
-// 		'u32':    Any(f64(3))
-// 		'u64':    Any(f64(4))
-// 		'i8':     Any(f64(5))
-// 		'i16':    Any(f64(6))
-// 		'int':    Any(f64(7))
-// 		'i64':    Any(f64(8))
-// 		'f32':    Any(9.1)
-// 		'f64':    Any(9.2)
-// 		'string': Any('s')
-// 		'bool':   Any(true)
-// 	})
-// 	r := unmarshal[PrimitiveTypes](input, UnmarshalOpts{})!
-// 	assert r.h == .woman
-// 	assert r.u8 == 1
-// 	assert r.u16 == 2
-// 	assert r.u32 == 3
-// 	assert r.u64 == 4
-// 	assert r.i8 == 5
-// 	assert r.i16 == 6
-// 	assert r.int == 7
-// 	assert r.i64 == 8
-// 	assert r.f32 == 9.1
-// 	assert r.f64 == 9.2
-// 	assert r.string == 's'
-// 	assert r.bool == true
-// }
+fn test_unmarshal_primitive_types() {
+	input := Any({
+		'h':      Any(f64(Human.woman))
+		'u8':     Any(f64(1))
+		'u16':    Any(f64(2))
+		'u32':    Any(f64(3))
+		'u64':    Any(f64(4))
+		'i8':     Any(f64(5))
+		'i16':    Any(f64(6))
+		'int':    Any(f64(7))
+		'i64':    Any(f64(8))
+		'f32':    Any(9.1)
+		'f64':    Any(9.2)
+		'string': Any('s')
+		'bool':   Any(true)
+	})
+	r := unmarshal[PrimitiveTypes](input, UnmarshalOpts{})!
+	assert r.h == .woman
+	assert r.u8 == 1
+	assert r.u16 == 2
+	assert r.u32 == 3
+	assert r.u64 == 4
+	assert r.i8 == 5
+	assert r.i16 == 6
+	assert r.int == 7
+	assert r.i64 == 8
+	assert r.f32 == 9.1
+	assert r.f64 == 9.2
+	assert r.string == 's'
+	assert r.bool == true
+}
 
 struct OptionalTypes {
 	h      ?Human
