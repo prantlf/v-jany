@@ -1,5 +1,11 @@
 # Changes 
 
+## [0.1.1](https://github.com/prantlf/v-jany/compare/v0.1.0...v0.1.1) (2023-09-09)
+
+### Bug Fixes
+
+* Make unmarshalling enums compatible with new v ([88d1601](https://github.com/prantlf/v-jany/commit/88d160152cfde315dbd8ea5dec627eeb24d13aaa))
+
 ## [0.1.0](https://github.com/prantlf/v-jany/compare/v0.0.6...v0.1.0) (2023-08-15)
 
 ### Features
