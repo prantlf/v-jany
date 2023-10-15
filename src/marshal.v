@@ -35,9 +35,9 @@ pub fn marshal[T](val T, opts MarshalOpts) !Any {
 	} $else $if T is $array {
 		return marshal_array(val, opts)!
 	} $else $if T is $struct {
-		return marshal_struct(val, opts)!
+		return marshal_struct(&val, opts)!
 	} $else $if T is $map {
-		return marshal_map(val, opts)!
+		return marshal_map(&val, opts)!
 	} $else {
 		return error('unsupported type ${T.name}')
 	}
@@ -58,13 +58,22 @@ fn marshal_enum[T](val T, names bool) !Any {
 
 fn marshal_array[T](val []T, opts MarshalOpts) !Any {
 	mut res := []Any{cap: val.len}
-	for item in res {
+	for item in val {
 		res << marshal(item, opts)!
 	}
 	return Any(res)
 }
 
-fn marshal_struct[T](src T, opts MarshalOpts) !Any {
+fn marshal_map[T](src &T, opts MarshalOpts) !Any {
+	mut res := map[string]Any{}
+	for key, value in src {
+		out := marshal(value, opts)!
+		res[key] = out
+	}
+	return Any(res)
+}
+
+fn marshal_struct[T](src &T, opts MarshalOpts) !Any {
 	mut res := map[string]Any{}
 
 	$for field in T.fields {
@@ -117,20 +126,13 @@ fn marshal_struct[T](src T, opts MarshalOpts) !Any {
 			} $else $if field.is_array {
 				res[json_name] = marshal_array(val, opts)!
 			} $else $if field.is_struct {
-				res[json_name] = marshal_struct(val, opts)!
+				res[json_name] = marshal_struct(&val, opts)!
 			} $else $if field.is_map {
-				res[json_name] = marshal_map(val, opts)!
+				res[json_name] = marshal_map(&val, opts)!
 			} $else {
 				return error('unsupported type ${type_name(field.typ)} of ${field.name}')
 			}
 		}
 	}
 	return Any(res)
-}
-
-fn marshal_map[T](src map[string]T, opts MarshalOpts) !Any {
-	res := a.object()!
-	for k, v in res {
-		typ[k] = T(v)
-	}
 }

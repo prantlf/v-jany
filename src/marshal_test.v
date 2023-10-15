@@ -238,19 +238,57 @@ fn test_marshal_optional_type() {
 // }
 // */
 
-// /*
-// struct ArrayInStruct {
-// 	arr []int
-// }
+fn test_marshal_array() {
+	input := [42]
+	r := marshal(input, MarshalOpts{})!
+	aa := r.array()!
+	v := aa[0]!
+	assert v == Any(f64(42))
+}
 
-// fn test_marshal_array_in_struct() {
-// 	jany.marshal[ArrayInStruct]('', jany.marshalOpts{}) or {
-// 		assert err.msg() == 'null is not an object'
-// 		return
-// 	}
-// 	assert false
-// }
-// */
+struct ArrayInStruct {
+	arr []int
+}
+
+fn test_marshal_array_in_struct() {
+	input := ArrayInStruct{
+		arr: [42]
+	}
+	r := marshal(input, MarshalOpts{})!
+	o := r.object()!
+	a := o['arr']!
+	aa := a.array()!
+	v := aa[0]!
+	assert v == Any(f64(42))
+}
+
+fn test_marshal_map() {
+	input := {
+		'answer': 42
+	}
+	r := marshal(input, MarshalOpts{})!
+	o := r.object()!
+	v := o['answer']!
+	assert v == Any(f64(42))
+}
+
+struct MapInStruct {
+	val map[string]int
+}
+
+fn test_marshal_map_in_struct() {
+	input := MapInStruct{
+		val: {
+			'answer': 42
+		}
+	}
+	r := marshal(input, MarshalOpts{})!
+	o := r.object()!
+	o2 := o['val']!
+	o2o := o2.object()!
+	v := o2o['answer']!
+	assert v == Any(f64(42))
+}
 
 struct InnerStruct {
 	val int
