@@ -1,5 +1,11 @@
 # Changes 
 
+## [0.1.2](https://github.com/prantlf/v-jany/compare/v0.1.1...v0.1.2) (2023-10-15)
+
+### Bug Fixes
+
+* Fix marshalling maps ([1dbca81](https://github.com/prantlf/v-jany/commit/1dbca81a1dc4ab5abe54de9f8721c2b703b4924d))
+
 ## [0.1.1](https://github.com/prantlf/v-jany/compare/v0.1.0...v0.1.1) (2023-09-09)
 
 ### Bug Fixes
