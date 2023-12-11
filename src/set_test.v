@@ -32,6 +32,22 @@ fn test_key() {
 	assert s.get('a')!.number()! == 2
 }
 
+fn test_quoted_key() {
+	s := Any({
+		'a': Any(f64(1))
+	})
+	s.set('"a"', Any(f64(2)))!
+	assert s.get('a')!.number()! == 2
+}
+
+fn test_empty_key() {
+	s := Any({
+		'': Any(f64(1))
+	})
+	s.set('""', Any(f64(2)))!
+	assert s.get('""')!.number()! == 2
+}
+
 fn test_new_key() {
 	s := Any({
 		'a': Any(f64(1))

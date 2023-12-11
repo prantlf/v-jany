@@ -1,6 +1,6 @@
 module jany
 
-[noinit]
+@[noinit]
 pub struct Null {}
 
 pub const null = Null{}
