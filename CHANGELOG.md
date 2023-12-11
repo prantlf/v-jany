@@ -1,5 +1,11 @@
 # Changes 
 
+## [0.1.3](https://github.com/prantlf/v-jany/compare/v0.1.2...v0.1.3) (2023-12-11)
+
+### Bug Fixes
+
+* Adapt for V langage changes ([ddcb1ae](https://github.com/prantlf/v-jany/commit/ddcb1ae6d8a7a4295063a2cbc8a29601d1a2a528))
+
 ## [0.1.2](https://github.com/prantlf/v-jany/compare/v0.1.1...v0.1.2) (2023-10-15)
 
 ### Bug Fixes
