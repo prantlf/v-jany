@@ -1,67 +1,67 @@
 module jany
 
 fn test_marshal_int() {
-	r := marshal(1, MarshalOpts{})!
+	r := marshal(1)!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_u8() {
-	r := marshal(u8(1), MarshalOpts{})!
+	r := marshal(u8(1))!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_u16() {
-	r := marshal(u16(1), MarshalOpts{})!
+	r := marshal(u16(1))!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_u32() {
-	r := marshal(u32(1), MarshalOpts{})!
+	r := marshal(u32(1))!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_u64() {
-	r := marshal(u64(1), MarshalOpts{})!
+	r := marshal(u64(1))!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_i8() {
-	r := marshal(u8(1), MarshalOpts{})!
+	r := marshal(u8(1))!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_i16() {
-	r := marshal(u16(1), MarshalOpts{})!
+	r := marshal(u16(1))!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_i64() {
-	r := marshal(u64(1), MarshalOpts{})!
+	r := marshal(u64(1))!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_f32() {
-	r := marshal(f32(1.2), MarshalOpts{})!
+	r := marshal(f32(1.2))!
 	assert f32(r.number()!) == 1.2
 }
 
 fn test_marshal_f64() {
-	r := marshal(1.2, MarshalOpts{})!
+	r := marshal(1.2)!
 	assert r == Any(1.2)
 }
 
 fn test_marshal_bool() {
-	r := marshal(true, MarshalOpts{})!
+	r := marshal(true)!
 	assert r == Any(true)
 }
 
 fn test_marshal_string() {
-	r := marshal('a', MarshalOpts{})!
+	r := marshal('a')!
 	assert r == Any('a')
 }
 
 // fn test_marshal_array() {
-// 	r := marshal([1], MarshalOpts{})!
+// 	r := marshal([1])!
 // 	assert r == Any([Any(f64(1))])
 // }
 
@@ -71,19 +71,19 @@ enum Human {
 }
 
 fn test_marshal_enum_num() {
-	r := marshal(Human.woman, MarshalOpts{})!
+	r := marshal(Human.woman)!
 	assert r == Any(f64(1))
 }
 
 fn test_marshal_enum_nam() {
-	r := marshal(Human.woman, MarshalOpts{ enums_as_names: true })!
+	r := marshal_opt(Human.woman, &MarshalOpts{ enums_as_names: true })!
 	assert r == Any('woman')
 }
 
 struct Empty {}
 
 fn test_marshal_empty_object() {
-	r := marshal(Empty{}, MarshalOpts{})!
+	r := marshal(Empty{})!
 	assert r == Any(map[string]Any{})
 }
 
@@ -118,7 +118,7 @@ fn test_marshal_primitive_types() {
 		f64: 9.2
 		string: 's'
 		bool: true
-	}, MarshalOpts{})!
+	})!
 	m := r.object()!
 	assert m['h']! == Any(f64(Human.woman))
 	assert m['u8']! == Any(f64(1))
@@ -240,7 +240,7 @@ fn test_marshal_optional_type() {
 
 fn test_marshal_array() {
 	input := [42]
-	r := marshal(input, MarshalOpts{})!
+	r := marshal(input)!
 	aa := r.array()!
 	v := aa[0]!
 	assert v == Any(f64(42))
@@ -254,7 +254,7 @@ fn test_marshal_array_in_struct() {
 	input := ArrayInStruct{
 		arr: [42]
 	}
-	r := marshal(input, MarshalOpts{})!
+	r := marshal(input)!
 	o := r.object()!
 	a := o['arr']!
 	aa := a.array()!
@@ -266,7 +266,7 @@ fn test_marshal_map() {
 	input := {
 		'answer': 42
 	}
-	r := marshal(input, MarshalOpts{})!
+	r := marshal(input)!
 	o := r.object()!
 	v := o['answer']!
 	assert v == Any(f64(42))
@@ -282,7 +282,7 @@ fn test_marshal_map_in_struct() {
 			'answer': 42
 		}
 	}
-	r := marshal(input, MarshalOpts{})!
+	r := marshal(input)!
 	o := r.object()!
 	o2 := o['val']!
 	o2o := o2.object()!
@@ -304,7 +304,7 @@ fn test_marshal_struct_in_struct() {
 			val: 1
 		}
 	}
-	r := marshal(input, MarshalOpts{})!
+	r := marshal(input)!
 	o := r.object()!
 	i := o['inner']!
 	io := i.object()!
@@ -329,7 +329,7 @@ fn test_attributes() {
 		u8: 4
 		u16: 0
 	}
-	r := marshal(input, MarshalOpts{})!
+	r := marshal(input)!
 	o := r.object()!
 	assert o['int']! == Any(f64(1))
 	if _ := o['bool'] {

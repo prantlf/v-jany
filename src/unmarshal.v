@@ -11,13 +11,23 @@ pub:
 	ignore_number_overflow bool
 }
 
-pub fn unmarshal[T](a Any, opts &UnmarshalOpts) !T {
+@[inline]
+pub fn unmarshal[T](a Any) !T {
+	return unmarshal_opt[T](a, &UnmarshalOpts{})!
+}
+
+pub fn unmarshal_opt[T](a Any, opts &UnmarshalOpts) !T {
 	mut typ := T{}
-	unmarshal_to[T](a, mut typ, opts)!
+	unmarshal_opt_to[T](a, mut typ, opts)!
 	return typ
 }
 
-pub fn unmarshal_to[T](a Any, mut typ T, opts &UnmarshalOpts) ! {
+@[inline]
+pub fn unmarshal_to[T](a Any, mut typ T) ! {
+	unmarshal_opt_to[T](a, mut typ, &UnmarshalOpts{})!
+}
+
+pub fn unmarshal_opt_to[T](a Any, mut typ T, opts &UnmarshalOpts) ! {
 	if a is Null {
 		$if T is $option {
 			typ = none
@@ -68,7 +78,7 @@ fn unmarshal_array[T](_ []T, a Any, opts &UnmarshalOpts) ![]T {
 	res := a.array()!
 	mut typ := []T{cap: res.len}
 	for item in res {
-		typ << unmarshal[T](item, opts)!
+		typ << unmarshal_opt[T](item, opts)!
 	}
 	return typ
 }
@@ -246,7 +256,7 @@ fn unmarshal_enum(a Any, typ int) !int {
 // 	res := a.object()!
 // 	mut typ := T{}
 // 	for k, v in res {
-// 		typ[k] = unmarshal[T](v, opts)!
+// 		typ[k] = unmarshal_opt[T](v, opts)!
 // 	}
 // 	return typ
 // }

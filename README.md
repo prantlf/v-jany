@@ -157,7 +157,7 @@ Except for the basic V types mapped from JSON types, there're additional getters
 
 ### Formatting
 
-Serialisation of an `Any` to a string representation is expected from libraries providing the specific format, liek JSON or YAML. The `Any` type provides only a simple serialisation to string for logging purposes - the getter `.str()`:
+Serialisation of an `Any` to a string representation is expected from libraries providing the specific format, like JSON or YAML. The `Any` type provides only a simple serialisation to string for logging purposes - the getter `.str()`:
 
 ```go
 str := any.str()
@@ -165,7 +165,7 @@ str := any.str()
 
 ### Traversing
 
-Values nested in arrays objects can be obtained by a convenience function using a string path - `.get(...)`. The syntax is the same as in the V langauge - arrays are accessed by `[usize]` and fields by `.`. Quotation marks (`"` or `'`) san be used to specify field names with some of three special characters (`[`, `]` and `.`). If a value on any level of the the specifcfied path is missing, an error will be returned:
+Values nested in arrays objects can be obtained by a convenience function using a string path - `.get(...)`. The syntax is the same as in the V langauge - arrays are accessed by `[usize]` and fields by `.`. Quotation marks (`"` or `'`) can be used to specify field names with some of three special characters (`[`, `]` and `.`). If a value on any level of the the specifcfied path is missing, an error will be returned:
 
 ```go
 val := any.get('a.b[0]')!

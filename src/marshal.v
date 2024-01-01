@@ -5,7 +5,12 @@ pub:
 	enums_as_names bool
 }
 
-pub fn marshal[T](val T, opts MarshalOpts) !Any {
+@[inline]
+pub fn marshal[T](val T) !Any {
+	return marshal_opt[T](val, &MarshalOpts{})!
+}
+
+pub fn marshal_opt[T](val T, opts &MarshalOpts) !Any {
 	$if T is $enum {
 		return marshal_enum(val, opts.enums_as_names)
 	} $else $if T is int {
@@ -59,7 +64,7 @@ fn marshal_enum[T](val T, names bool) !Any {
 fn marshal_array[T](val []T, opts MarshalOpts) !Any {
 	mut res := []Any{cap: val.len}
 	for item in val {
-		res << marshal(item, opts)!
+		res << marshal_opt(item, opts)!
 	}
 	return Any(res)
 }
@@ -67,7 +72,7 @@ fn marshal_array[T](val []T, opts MarshalOpts) !Any {
 fn marshal_map[T](src &T, opts MarshalOpts) !Any {
 	mut res := map[string]Any{}
 	for key, value in src {
-		out := marshal(value, opts)!
+		out := marshal_opt(value, opts)!
 		res[key] = out
 	}
 	return Any(res)
