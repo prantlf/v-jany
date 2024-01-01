@@ -1,5 +1,18 @@
 # Changes 
 
+## [0.2.0](https://github.com/prantlf/v-jany/compare/v0.1.3...v0.2.0) (2024-01-01)
+
+### Features
+
+* Remove options from marshal and unmarshal ([019e616](https://github.com/prantlf/v-jany/commit/019e616c56b40984ac462e65213b73867c175815))
+
+### BREAKING CHANGES
+
+If you just pass default options to the functions,
+just delete them. They do not expect options any more. If you use
+non-empty options, replace the function name with `<name>_opt`,
+which supports options.
+
 ## [0.1.3](https://github.com/prantlf/v-jany/compare/v0.1.2...v0.1.3) (2023-12-11)
 
 ### Bug Fixes
