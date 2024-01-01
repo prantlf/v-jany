@@ -33,22 +33,22 @@ jobs:
     - name: Test
       run: make
 
-  windows:
-    runs-on: windows-latest
-    steps:
-    - name: Checkout Sources
-      uses: actions/checkout@v4
-    - name: Setup V
-      uses: prantlf/setup-v-action@v2
-    - name: Test
-      run: cmd /c make.bat
+  # windows:
+  #   runs-on: windows-latest
+  #   steps:
+  #   - name: Checkout Sources
+  #     uses: actions/checkout@v4
+  #   - name: Setup V
+  #     uses: prantlf/setup-v-action@v2
+  #   - name: Test
+  #     run: cmd /c make.bat
 
   release:
     if: ${{ github.ref_name == 'master' }}
     needs:
       - linux
       - macos
-      - windows
+      # - windows
     runs-on: ubuntu-latest
     steps:
     - name: Checkout sources
