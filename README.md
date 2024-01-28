@@ -250,13 +250,15 @@ mut config := Config{}
 config := unmarshal_to(any, mut config, UnmarshalOpts{})!
 ```
 
-## TODO
+## Contributing
 
-This is a work in progress.
+In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code.
 
-* Should `is_null` stay or should only `is Null` remain?
-* Should the getters be forgiving and checking getter should be renamed to `strict_*`?
-* Support enums, which don't start with `0` or don't have their values as sequences without holes.
+## License
+
+Copyright (c) 2023-2024 Ferdinand Prantl
+
+Licensed under the MIT license.
 
 [VPM]: https://vpm.vlang.io/packages/prantlf.jany
 [prantlf.json]: https://github.com/prantlf/v-json
