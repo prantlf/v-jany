@@ -1,5 +1,11 @@
 # Changes 
 
+## [0.2.2](https://github.com/prantlf/v-jany/compare/v0.2.1...v0.2.2) (2024-04-17)
+
+### Bug Fixes
+
+* Clone unsafely created string saved in arrays ([23db1c6](https://github.com/prantlf/v-jany/commit/23db1c64a90ff7ba4bdfaeba99ad572865952f6a))
+
 ## [0.2.1](https://github.com/prantlf/v-jany/compare/v0.2.0...v0.2.1) (2024-03-24)
 
 ### Bug Fixes
