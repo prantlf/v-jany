@@ -38,7 +38,7 @@ fn parse_path(path string) ![]Part {
 		if rune_len == 1 {
 			if in_key {
 				if ch == str_delim {
-					val := unsafe { tos(path.str + part_start, cur - part_start) }
+					val := unsafe { tos(path.str + part_start, cur - part_start).clone() }
 					parts << val
 					in_key = false
 					cur++
@@ -64,7 +64,7 @@ fn parse_path(path string) ![]Part {
 				in_key = true
 			} else if ch == u8(`[`) {
 				if part_start < cur {
-					val := unsafe { tos(path.str + part_start, cur - part_start) }
+					val := unsafe { tos(path.str + part_start, cur - part_start).clone() }
 					parts << val
 				}
 				cur++
@@ -72,7 +72,7 @@ fn parse_path(path string) ![]Part {
 				in_index = true
 			} else if ch == u8(`.`) {
 				if part_start < cur {
-					val := unsafe { tos(path.str + part_start, cur - part_start) }
+					val := unsafe { tos(path.str + part_start, cur - part_start).clone() }
 					parts << val
 				}
 				cur++
@@ -85,7 +85,7 @@ fn parse_path(path string) ![]Part {
 		}
 	}
 	if part_start < len {
-		val := unsafe { tos(path.str + part_start, len - part_start) }
+		val := unsafe { tos(path.str + part_start, len - part_start).clone() }
 		if in_key {
 			return error('missing ${str_delim} for key "${val}"')
 		}

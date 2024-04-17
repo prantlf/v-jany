@@ -5,7 +5,7 @@ check:
 	v vet .
 
 test:
-	v -use-os-system-to-run test .
+	v test .
 
 clean:
 	rm -rf src/*_test src/*.dSYM
