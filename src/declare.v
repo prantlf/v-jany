@@ -19,5 +19,5 @@ pub fn (a Any) typ() string {
 }
 
 pub fn (a Any) is_null() bool {
-	return a == Any(jany.null)
+	return a == Any(null)
 }
