@@ -1,5 +1,11 @@
 # Changes 
 
+## [0.2.3](https://github.com/prantlf/v-jany/compare/v0.2.2...v0.2.3) (2024-11-16)
+
+### Bug Fixes
+
+* Fix sources for the new V compiler ([479fe54](https://github.com/prantlf/v-jany/commit/479fe54ba3347ed30d4ea4c319425ec2ae951e85))
+
 ## [0.2.2](https://github.com/prantlf/v-jany/compare/v0.2.1...v0.2.2) (2024-04-17)
 
 ### Bug Fixes
