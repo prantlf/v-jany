@@ -153,29 +153,53 @@ fn unmarshal_struct[T](_ T, a Any, opts &UnmarshalOpts) !T {
 					unsafe {
 						typ.$(field.name) = source
 					}
-				} $else $if field.typ is int || field.typ is ?int {
+				} $else $if field.typ is int {
 					typ.$(field.name) = unmarshal_int[int](val, ino)!
-				} $else $if field.typ is u8 || field.typ is ?u8 {
+				} $else $if field.typ is ?int {
+					typ.$(field.name) = unmarshal_int[int](val, ino)!
+				} $else $if field.typ is u8 {
 					typ.$(field.name) = unmarshal_int[u8](val, ino)!
-				} $else $if field.typ is u16 || field.typ is ?u16 {
+				} $else $if field.typ is ?u8 {
+					typ.$(field.name) = unmarshal_int[u8](val, ino)!
+				} $else $if field.typ is u16 {
 					typ.$(field.name) = unmarshal_int[u16](val, ino)!
-				} $else $if field.typ is u32 || field.typ is ?u32 {
+				} $else $if field.typ is ?u16 {
+					typ.$(field.name) = unmarshal_int[u16](val, ino)!
+				} $else $if field.typ is u32 {
 					typ.$(field.name) = unmarshal_int[u32](val, ino)!
-				} $else $if field.typ is u64 || field.typ is ?u64 {
+				} $else $if field.typ is ?u32 {
+					typ.$(field.name) = unmarshal_int[u32](val, ino)!
+				} $else $if field.typ is u64 {
 					typ.$(field.name) = unmarshal_int[u64](val, ino)!
-				} $else $if field.typ is i8 || field.typ is ?i8 {
+				} $else $if field.typ is ?u64 {
+					typ.$(field.name) = unmarshal_int[u64](val, ino)!
+				} $else $if field.typ is i8 {
 					typ.$(field.name) = unmarshal_int[i8](val, ino)!
-				} $else $if field.typ is i16 || field.typ is ?i16 {
+				} $else $if field.typ is ?i8 {
+					typ.$(field.name) = unmarshal_int[i8](val, ino)!
+				} $else $if field.typ is i16 {
 					typ.$(field.name) = unmarshal_int[i16](val, ino)!
-				} $else $if field.typ is i64 || field.typ is ?i64 {
+				} $else $if field.typ is ?i16 {
+					typ.$(field.name) = unmarshal_int[i16](val, ino)!
+				} $else $if field.typ is i64 {
 					typ.$(field.name) = unmarshal_int[i64](val, ino)!
-				} $else $if field.typ is f32 || field.typ is ?f32 {
+				} $else $if field.typ is ?i64 {
+					typ.$(field.name) = unmarshal_int[i64](val, ino)!
+				} $else $if field.typ is f32 {
 					typ.$(field.name) = unmarshal_f32(val, ino)!
-				} $else $if field.typ is f64 || field.typ is ?f64 {
+				} $else $if field.typ is ?f32 {
+					typ.$(field.name) = unmarshal_f32(val, ino)!
+				} $else $if field.typ is f64 {
 					typ.$(field.name) = val.number()!
-				} $else $if field.typ is bool || field.typ is ?bool {
+				} $else $if field.typ is ?f64 {
+					typ.$(field.name) = val.number()!
+				} $else $if field.typ is bool {
 					typ.$(field.name) = val.boolean()!
-				} $else $if field.typ is string || field.typ is ?string {
+				} $else $if field.typ is ?bool {
+					typ.$(field.name) = val.boolean()!
+				} $else $if field.typ is string {
+					typ.$(field.name) = val.string()!
+				} $else $if field.typ is ?string {
 					typ.$(field.name) = val.string()!
 				} $else $if field.is_array {
 					$if field.is_option {
