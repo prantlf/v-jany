@@ -1,5 +1,11 @@
 # Changes 
 
+## [0.2.4](https://github.com/prantlf/v-jany/compare/v0.2.3...v0.2.4) (2025-07-31)
+
+### Bug Fixes
+
+* Work around compiler bug with optional fields ([848a72d](https://github.com/prantlf/v-jany/commit/848a72d86c83ea6552bf60e780caa4611721554e))
+
 ## [0.2.3](https://github.com/prantlf/v-jany/compare/v0.2.2...v0.2.3) (2024-11-16)
 
 ### Bug Fixes
