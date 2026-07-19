@@ -1,5 +1,11 @@
 # Changes 
 
+## [0.3.0](https://github.com/prantlf/v-jany/compare/v0.2.4...v0.3.0) (2026-07-19)
+
+### Features
+
+* Adapt to breaking changes in V ([0a7cda5](https://github.com/prantlf/v-jany/commit/0a7cda5933ffcba1aba1957f12f33164fecbe557))
+
 ## [0.2.4](https://github.com/prantlf/v-jany/compare/v0.2.3...v0.2.4) (2025-07-31)
 
 ### Bug Fixes
