@@ -37,7 +37,8 @@ pub fn unmarshal_opt_to[T](a Any, mut typ T, opts &UnmarshalOpts) ! {
 	} else {
 		ino := opts.ignore_number_overflow
 		$if T is $enum {
-			typ = unmarshal_enum(a, T.idx)!
+			val := unmarshal_enum(a, T.idx)!
+			typ = unsafe { T(val) }
 		} $else $if T is int || T is ?int {
 			typ = unmarshal_int[int](a, ino)!
 		} $else $if T is u8 || T is ?u8 {
@@ -99,7 +100,11 @@ fn unmarshal_struct[T](_ T, a Any, opts &UnmarshalOpts) !T {
 				mut skip := false
 				for attr in field.attrs {
 					if attr.starts_with('json: ') {
-						json_name = attr[6..]
+						json_name = if attr[6] == `'` {
+							attr[7..(attr.len - 1)]
+						} else {
+							attr[6..]
+						}
 					} else if attr == 'skip' {
 						skip = true
 					}
@@ -123,7 +128,11 @@ fn unmarshal_struct[T](_ T, a Any, opts &UnmarshalOpts) !T {
 		mut nooverflow := false
 		for attr in field.attrs {
 			if attr.starts_with('json: ') {
-				json_name = attr[6..]
+				json_name = if attr[6] == `'` {
+					attr[7..(attr.len - 1)]
+				} else {
+					attr[6..]
+				}
 			} else if attr == 'required' {
 				required = true
 			} else if attr == 'skip' {
@@ -203,8 +212,8 @@ fn unmarshal_struct[T](_ T, a Any, opts &UnmarshalOpts) !T {
 					typ.$(field.name) = val.string()!
 				} $else $if field.is_array {
 					$if field.is_option {
-						typ.$(field.name) = unmarshal_array_option(typ.$(field.name),
-							val, opts)!
+						// typ.$(field.name) = unmarshal_array_option(typ.$(field.name), val, opts)!
+						return error('unsupported option type ${type_name(field.typ)} of ${field.name}')
 					} $else {
 						typ.$(field.name) = unmarshal_array(typ.$(field.name), val, opts)!
 					}

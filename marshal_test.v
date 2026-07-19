@@ -76,7 +76,9 @@ fn test_marshal_enum_num() {
 }
 
 fn test_marshal_enum_nam() {
-	r := marshal_opt(Human.woman, &MarshalOpts{ enums_as_names: true })!
+	r := marshal_opt(Human.woman, &MarshalOpts{
+		enums_as_names: true
+	})!
 	assert r == Any('woman')
 }
 

@@ -61,7 +61,7 @@ fn marshal_enum[T](val T, names bool) !Any {
 	}
 }
 
-fn marshal_array[T](val []T, opts MarshalOpts) !Any {
+fn marshal_array[T](val []T, opts &MarshalOpts) !Any {
 	mut res := []Any{cap: val.len}
 	for item in val {
 		res << marshal_opt(item, opts)!
@@ -69,16 +69,18 @@ fn marshal_array[T](val []T, opts MarshalOpts) !Any {
 	return Any(res)
 }
 
-fn marshal_map[T](src &T, opts MarshalOpts) !Any {
+fn marshal_map[T](src &T, opts &MarshalOpts) !Any {
 	mut res := map[string]Any{}
 	for key, value in src {
-		out := marshal_opt(value, opts)!
+		// *value feels like a bug in V. There's a reference to the map,
+		// but not a reference to the value.
+		out := marshal_opt(*value, opts)!
 		res[key] = out
 	}
 	return Any(res)
 }
 
-fn marshal_struct[T](src &T, opts MarshalOpts) !Any {
+fn marshal_struct[T](src &T, opts &MarshalOpts) !Any {
 	mut res := map[string]Any{}
 
 	$for field in T.fields {
@@ -86,7 +88,11 @@ fn marshal_struct[T](src &T, opts MarshalOpts) !Any {
 		mut skip := false
 		for attr in field.attrs {
 			if attr.starts_with('json: ') {
-				json_name = attr[6..]
+				json_name = if attr[6] == `'` {
+					attr[7..(attr.len - 1)]
+				} else {
+					attr[6..]
+				}
 			} else if attr == 'skip' {
 				skip = true
 			}
@@ -94,10 +100,11 @@ fn marshal_struct[T](src &T, opts MarshalOpts) !Any {
 
 		if skip {
 		} else {
-			val := src.$(field.name)
 			$if field.is_enum {
+				val := src.$(field.name)
 				res[json_name] = Any(f64(val))
 			} $else $if field.typ is int {
+				val := src.$(field.name)
 				res[json_name] = Any(f64(val))
 				// } $else $if field.typ is ?int {
 				// 	if val != none {
@@ -107,33 +114,47 @@ fn marshal_struct[T](src &T, opts MarshalOpts) !Any {
 				// 		res[json_name] = Any(null)
 				// 	}
 			} $else $if field.typ is u8 {
+				val := src.$(field.name)
 				res[json_name] = Any(f64(val))
 			} $else $if field.typ is u16 {
+				val := src.$(field.name)
 				res[json_name] = Any(f64(val))
 			} $else $if field.typ is u32 {
+				val := src.$(field.name)
 				res[json_name] = Any(f64(val))
 			} $else $if field.typ is u64 {
+				val := src.$(field.name)
 				res[json_name] = Any(f64(val))
 			} $else $if field.typ is i8 {
+				val := src.$(field.name)
 				res[json_name] = Any(f64(val))
 			} $else $if field.typ is i16 {
+				val := src.$(field.name)
 				res[json_name] = Any(f64(val))
 			} $else $if field.typ is i64 {
+				val := src.$(field.name)
 				res[json_name] = Any(f64(val))
 			} $else $if field.typ is f32 {
+				val := src.$(field.name)
 				res[json_name] = Any(f64(val))
 			} $else $if field.typ is f64 {
+				val := src.$(field.name)
 				res[json_name] = Any(val)
 			} $else $if field.typ is bool {
+				val := src.$(field.name)
 				res[json_name] = Any(val)
 			} $else $if field.typ is string {
+				val := src.$(field.name)
 				res[json_name] = Any(val)
 			} $else $if field.is_array {
+				val := src.$(field.name)
 				res[json_name] = marshal_array(val, opts)!
 			} $else $if field.is_struct {
-				res[json_name] = marshal_struct(&val, opts)!
+				val := &src.$(field.name)
+				res[json_name] = marshal_struct(val, opts)!
 			} $else $if field.is_map {
-				res[json_name] = marshal_map(&val, opts)!
+				val := &src.$(field.name)
+				res[json_name] = marshal_map(val, opts)!
 			} $else {
 				return error('unsupported type ${type_name(field.typ)} of ${field.name}')
 			}
